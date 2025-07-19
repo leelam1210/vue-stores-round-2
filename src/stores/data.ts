@@ -9,14 +9,21 @@ interface CartItem {
   [key: string]: any
 }
 
+interface Product {
+  id: string
+  name: string
+  price: number
+}
+
 export const useDataStore = defineStore('data', {
   state: () => ({
     categories: [],
-    products: [],
+    products: ref<Product[]>([]),
     toppings: [],
     loading: false,
     categorySelectedId: 1,
     cartTotalQuantity: 0,
+    favoriteTotal: 0,
     filteredProducts: ref<any[]>([])
   }),
   actions: {
@@ -35,6 +42,9 @@ export const useDataStore = defineStore('data', {
         const cartItems = JSON.parse(localStorage.getItem('cart-items') || '[]')
         const totalQuantity = cartItems.reduce((sum: number, item: CartItem) => sum + (item.quantity || 0), 0)
         this.cartTotalQuantity = totalQuantity
+
+        const favoriteItems = JSON.parse(localStorage.getItem('favorite-items') || '[]')
+        this.favoriteTotal = favoriteItems.length
 
       } catch (err) {
         console.log(err, 'err')

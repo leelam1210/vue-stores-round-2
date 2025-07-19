@@ -3,6 +3,7 @@ import Sidebar from '../components/Sidebar.vue'
 import TopBar from '../components/TopBar.vue'
 import Toppings from '../components/Toppings.vue'
 import ListProduct from '../components/ListProduct.vue'
+import FavoriteProducts from '../components/FavoriteProducts.vue'
 
 </script>
 <template>
@@ -13,6 +14,7 @@ import ListProduct from '../components/ListProduct.vue'
       <div class="page-content">
         <Toppings/>
         <ListProduct/>
+        <FavoriteProducts/>
       </div>
     </div>
   </div>

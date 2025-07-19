@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-100 p-4 mt-6 rounded w-full">
-    <div class="font-bold mb-4">PRODUCT:</div>
+    <div class="font-bold mb-4">TẤT CẢ SẢN PHẨM:</div>
     <div
       class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
       v-if="!data.loading"
