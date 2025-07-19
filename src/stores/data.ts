@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { MockMenuService } from '../services/mockMenuService'
+import { MockMenuService } from '../mock-data/mockMenuService.js'
 import { ref } from 'vue'
 
 const mockMenuService = new MockMenuService()
