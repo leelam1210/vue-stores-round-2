@@ -1,10 +1,13 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useDataStore } from '../stores/data'
+import { MockMenuService } from '../mock-data/mockMenuService'
 import { Popover } from 'ant-design-vue'
 import CartItem from './CartItem.vue'
 
 const data = useDataStore()
+const mockMenuService = new MockMenuService()
+const products = ref([])
 
 const activeCategoryName = computed(() => {
   const found = data.categories.find(cat => cat.id === data.categorySelectedId)
@@ -20,7 +23,7 @@ const favoriteItems = computed(() => {
   data.favoriteTotal
   const favoriteIds = JSON.parse(localStorage.getItem('favorite-items') || '[]')
   return favoriteIds.map(id => {
-    return data.products.find(product => product.id === id)
+    return products.value.find(product => product.id === id)
   }).filter(product => product !== undefined)
 })
 
@@ -30,6 +33,17 @@ const removeFromFavorites = (productId) => {
   localStorage.setItem('favorite-items', JSON.stringify(updatedFavorites))
   data.setState('favoriteTotal', updatedFavorites.length)
 }
+
+onMounted(async () => {
+  try {
+    const result = await mockMenuService.getProducts()
+    if (result.success) {
+      products.value = result.data
+    }
+  } catch (error) {
+    console.error('Error loading products:', error)
+  }
+})
 </script>
 
 <template>
