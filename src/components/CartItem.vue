@@ -41,7 +41,12 @@ const props = defineProps<{
   item: any
 }>()
 
-function onQuantityChange(value: number) {
+interface CartItem {
+  quantity: number
+  [key: string]: any
+}
+
+function onQuantityChange(value: number | string) {
   const cart = JSON.parse(localStorage.getItem('cart-items') || '[]')
   const idx = cart.findIndex(
     (cartItem: any) =>
@@ -52,7 +57,7 @@ function onQuantityChange(value: number) {
     cart[idx].quantity = value
     localStorage.setItem('cart-items', JSON.stringify(cart))
 
-    const totalQuantity = cart.reduce((sum: number, item: Object) => sum + Number(item.quantity), 0)
+    const totalQuantity = cart.reduce((sum: number, item: CartItem) => sum + Number(item.quantity), 0)
     dataStore.setState('cartTotalQuantity', totalQuantity) 
   }
 }
@@ -68,7 +73,7 @@ function removeItem() {
     cart.splice(idx, 1)
     localStorage.setItem('cart-items', JSON.stringify(cart))
 
-    const totalQuantity = cart.reduce((sum: number, item: Object) => sum + Number(item.quantity), 0)
+    const totalQuantity = cart.reduce((sum: number, item: CartItem) => sum + Number(item.quantity), 0)
     dataStore.setState('cartTotalQuantity', totalQuantity)
   }
 }

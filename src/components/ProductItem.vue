@@ -31,7 +31,7 @@
 import { ref } from 'vue'
 import QuickView from './QuickView.vue'
 
-const props = defineProps<{ item: any }>()
+const { item } = defineProps<{ item: any }>()
 
 const showQuickView = ref(false)
 

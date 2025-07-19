@@ -60,6 +60,11 @@ const emit = defineEmits(['close'])
 const selectedToppings = ref<string[]>([])
 const quantity = ref(1)
 
+interface CartItem {
+  quantity: number
+  [key: string]: any
+}
+
 watch(
   () => props.show,
   (val) => {
@@ -88,7 +93,7 @@ function addToCart() {
   const cart = JSON.parse(localStorage.getItem('cart-items') || '[]')
 
   const idx = cart.findIndex(
-    (item) =>
+    (item: CartItem) =>
       item.id === cartItem.id &&
       JSON.stringify(item.selectedToppings) === JSON.stringify(cartItem.selectedToppings)
   )
@@ -101,7 +106,7 @@ function addToCart() {
 
   localStorage.setItem('cart-items', JSON.stringify(cart))
 
-  const totalQuantity = cart.reduce((sum: number, item: Object) => sum + Number(item.quantity), 0)
+  const totalQuantity = cart.reduce((sum: number, item: CartItem) => sum + Number(item.quantity), 0)
   dataStore.setState('cartTotalQuantity', totalQuantity) 
 
   message.success('Đã thêm vào giỏ hàng!')
